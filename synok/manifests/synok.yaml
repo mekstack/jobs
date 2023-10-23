@@ -1,0 +1,72 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: synok
+  namespace: synok
+spec:
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: synok
+            image: ghcr.io/mekstack/jobs/synok:latest
+            imagePullPolicy: Always
+            env:
+            - name: VAULT_ADDR
+              valueFrom:
+                secretKeyRef:
+                  name: synok-vault
+                  key: addr
+            - name: VAULT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: synok-vault
+                  key: token
+            - name: VAULT_ACCESSOR
+              valueFrom:
+                secretKeyRef:
+                  name: synok-vault
+                  key: mountAccessor
+
+            - name: SYNC_LOG_LEVEL
+              value: info
+
+            - name: OS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: synok-openstack
+                  key: user
+            - name: OS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: synok-openstack
+                  key: pass
+            - name: OS_PROJECT_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: synok-openstack
+                  key: projectName
+            - name: OS_DOMAIN_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: synok-openstack
+                  key: domainName
+            - name: OS_REGION_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: synok-openstack
+                  key: regionName
+            - name: OS_AUTH_URL
+              valueFrom:
+                secretKeyRef:
+                  name: synok-openstack
+                  key: authUrl
+            - name: MAPPING_ID
+              valueFrom:
+                secretKeyRef:
+                  name: synok-openstack
+                  key: mappingID
+          restartPolicy: Never
+      backoffLimit: 4

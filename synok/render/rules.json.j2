@@ -1,0 +1,40 @@
+{
+"rules":
+[
+    {% for user in userProjects -%}
+    {
+        "local": [
+            {
+                "user": {
+                    "name": "{{ user.split('@')[0] }}"
+                },
+                "projects": [
+                    {% for project_number in userProjects[user] -%}
+                    {
+                        "name": "{{ project_number }}",
+                        "roles": [
+                            {
+                                "name": "member"
+                            }
+                        ]
+                    }
+                    {%- if not loop.last -%}
+                    ,
+                    {% endif %}
+                    {% endfor -%}
+                ]
+            }
+        ],
+        "remote": [
+            {
+                "type": "HTTP_OIDC_USERNAME",
+                "any_one_of": [ "{{ user.split('@')[0] }}" ]
+            }
+        ]
+    }
+    {%- if not loop.last -%}
+        ,
+    {% endif %}
+    {% endfor %}
+]
+}
