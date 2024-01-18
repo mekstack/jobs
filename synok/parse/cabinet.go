@@ -27,7 +27,7 @@ type Member struct {
 
 type ProjectHeader struct {
 	Data struct {
-		NumberOrig  int    `json:"numberOrig"`
+		Number      int    `json:"number,string"`
 		NameRus     string `json:"nameRus"`
 		StatusLabel string `json:"statusLabel"`
 	} `json:"data"`
@@ -71,7 +71,7 @@ func GetCabinetState() map[string][]int {
 				log.Debugf("Project %d isn't labeled active: statusLabel is %s", projectId, projectHead.Data.StatusLabel)
 				return
 			}
-			projectNum := projectHead.Data.NumberOrig
+			projectNum := projectHead.Data.Number
 
 			respMemb, err := http.Get(common.ProjectMembersURL + fmt.Sprint(projectId))
 			if err != nil {
