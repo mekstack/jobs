@@ -1,7 +1,7 @@
 package common
 
 const MaxProjectNum = 2000
-const MaxGoroutines = 15
+const MaxGoroutines = 10
 const EntityPath = "identity/entity/"
 const EntityNamePath = "identity/entity/name/"
 const EntityAliasPath = "identity/entity-alias/"
