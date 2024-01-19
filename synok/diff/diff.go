@@ -35,8 +35,9 @@ func ProjectDelta(cabinetData map[string][]int, vaultData map[string][]int) map[
 			var userDiff common.UserProjects
 
 			if vaultValue, presentInVault := vaultData[email]; presentInVault {
-				log.Debugf("Analyzing: %s vs %s\n", cabinetData[email], vaultValue)
+				log.Debugf("Analyzing %s: %s vs %s\n", email, cabinetData[email], vaultValue)
 				if sliceValuesEqual(cabinetData[email], vaultValue) {
+          log.Debugf("Verdict: %s projects are already synced", email)
 					return
 				}
 			} else {

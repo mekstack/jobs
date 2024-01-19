@@ -61,7 +61,7 @@ func deleteEntityByName(c *vault.Client, userName string) {
 	log.Debugf("Deleting %s\n", userName)
 	_, err := c.Logical().Delete(common.EntityNamePath + common.TrimEmail(userName))
 	if err != nil {
-		log.Warnf("Unable to delete %s from vault: %v", userName, err)
+		log.Infof("Unable to delete %s from vault: %v", userName, err)
 	}
 }
 

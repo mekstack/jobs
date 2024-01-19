@@ -103,11 +103,14 @@ func main() {
 	openstackClient := getOpenstackIdentityV3Client()
 
 	cabinetData := parse.GetCabinetState()
+  log.Debugf("%v", cabinetData)
 	//cabinetData := make(map[string][]int) // <- this can be used to force-clear vault: just uncomment it and comment out previous line
 
 	vaultData := parse.GetVaultState(vaultClient, vaultMountAccessor)
+  log.Debugf("%v", vaultData)
 
 	diff := diff.ProjectDelta(cabinetData, vaultData)
+  log.Debugf("%v", diff)
 
 	sync.CommitUserDeltaToVault(vaultClient, vaultMountAccessor, diff)
 

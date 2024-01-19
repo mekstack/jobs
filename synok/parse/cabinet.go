@@ -71,7 +71,8 @@ func GetCabinetState() map[string][]int {
 				log.Debugf("Project %d isn't labeled active: statusLabel is %s", projectId, projectHead.Data.StatusLabel)
 				return
 			}
-			projectNum := projectHead.Data.Number
+			var projectNum int 
+      projectNum = projectHead.Data.Number
 
 			respMemb, err := http.Get(common.ProjectMembersURL + fmt.Sprint(projectId))
 			if err != nil {
